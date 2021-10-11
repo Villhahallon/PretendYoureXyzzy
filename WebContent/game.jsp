@@ -72,87 +72,12 @@ created for the user now.
 <body id="gamebody">
 
 <div id="welcome">
-    <div id="tweetbox">
-        <h3>Recent tweets (mainly server status updates)</h3>
-        <a class="twitter-timeline" data-height="500" data-dnt="true" data-theme="light"
-           href="https://twitter.com/_PYX_?ref_src=twsrc%5Etfw">Tweets by _PYX_</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </div>
+
     <h1 tabindex="0">
         Pretend You're <dfn
             title="Xyzzy is an Artificial Unintelligence bot. You'll be making more sense than him in this game.">
         Xyzzy</dfn>
     </h1>
-    <h3>A <a href="http://cardsagainsthumanity.com/">Cards Against Humanity</a> clone.</h3>
-    <p>
-        This webapp is still in development. There will be bugs, but hopefully they won't affect gameplay
-        very much. To assist with development, <strong>all traffic on this server <em>may</em> be
-        logged.</strong>
-    </p>
-    <p>
-        If this is your first time playing, you may wish to read <a href="index.jsp">the changelog and
-        list of known issues</a>.
-    </p>
-    <p tabindex="0">Most recent updates: 1 June 2018, 5 April 2018, and 27 March 2018:</p>
-    <ul>
-        <li>Play history links are now provided for users and games. Assuming you have not opted out
-            from persistent play history logging and still have your persistent ID cookie, you can view
-            every game you've played on the device you are connecting from since the beginning of March.
-            Regardless of opting out or not, you can view every game you've played in the current session,
-            or every round in a game, with the links provided when you log in or join a game.
-        </li>
-        <li>Bugfixes from last week's release (most notably, no more "undefined" before your name if you
-            reload the page).
-        </li>
-        <li>Minor updates to the chat filter settings to make it less strict, and an additional chat
-            filter (you cannot use the same word too many times in the same message).
-        </li>
-        <li>Back-end support for other features which will be enabled soon.</li>
-        <li>You may now provide a password-like identification code when connecting to positively
-            identify yourself and make it difficult for someone to impersonate you. Details are on
-            <a href="https://github.com/ajanata/PretendYoureXyzzy/wiki/Identification-Codes">the GitHub
-                wiki.</a>
-            <ul>
-                <li><strong>This is optional, and if you choose to not do so, everything will work the same as
-                    it always has.</strong></li>
-                <li><strong>Do not use a password you use on any other site.</strong></li>
-                <li>The value you enter in the identification code box will be combined with your username
-                    and a server secret and converted into an 11 character code.
-                </li>
-                <li>Users that have an identification code will have a + in front of their name in chat.
-                    Hover your mouse over their message to see their 11 character code.
-                </li>
-                <li>You may also use the <span style="font-family:monospace">/whois</span> command in the chat
-                    to view information about a user, including their 11 character code.
-                </li>
-            </ul>
-        </li>
-        <li>Images on CardCast cards is now supported in a safe manner. Cards will need updated to work
-            with this format. Information on how to use it is on the
-            <a href="https://github.com/ajanata/PretendYoureXyzzy/wiki/Cardcast#images-on-cards">GitHub
-                wiki.</a></li>
-        <li><strong>Automatic chat moderation has been added.</strong> This is fairly crude, and limits
-            the following behavior:
-            <ul>
-                <li>(Global only, if enabled) Messages may not contain large amounts of non-Latin characters
-                    (emoji spam, etc.).
-                </li>
-                <li>(Global only, if enabled) CAPS LOCK IS NOT ALLOWED EITHER.</li>
-                <li>(Global only, if enabled) Once your message is a certain length, you have to actually use
-                    multiple words.
-                </li>
-                <li>Global and game chats now have different messages-per-unit-time settings and counters.
-                </li>
-                <li>You may not repeat the same message multiple times in a row.</li>
-                <li>Certain characters and words will cause a message to be silently dropped (that is, instead
-                    of returning an error message to the person who typed it like all of the previous things will,
-                    the server will just ignore the message altogether so that user does not know their message
-                    was ignored). There are currently two things on this list, and no, I'm not telling you what
-                    they are, and no, they're not actually in Git either.
-                </li>
-            </ul>
-        </li>
-    </ul>
     <div id="nickbox">
         <label for="nickname">Nickname:</label>
         <input type="text" id="nickname" value="" maxlength="30" role="textbox"
@@ -166,19 +91,6 @@ created for the user now.
         <input type="button" id="nicknameconfirm" value="Set"/>
         <span id="nickbox_error" class="error"></span>
     </div>
-    <p><a href="privacy.html"><strong>Hey, this is important:</strong> Read the privacy page for
-        details about what gameplay information is collected and how it's shared.</a></p>
-    <p>
-        Pretend You're Xyzzy is a Cards Against Humanity clone, which is available at
-        <a href="http://www.cardsagainsthumanity.com/">cardsagainsthumanity.com</a>, where you can buy
-        it or download and print it out yourself. It is distributed under a
-        <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons - Attribution -
-            Noncommercial - Share Alike license</a>. This web version is in no way endorsed or sponsored by
-        cardsagainsthumanity.com. You may download the source code to this version from
-        <a href="https://github.com/ajanata/PretendYoureXyzzy">GitHub</a>. For full license
-        information, including information about included libraries, see the
-        <a href="license.html">full license information</a>.
-    </p>
 </div>
 
 <div id="canvas" class="hide">
