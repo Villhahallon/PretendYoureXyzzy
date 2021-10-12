@@ -97,7 +97,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
   <div id="nickbox">
     <label for="nickname">Nickname:</label>
     <input type="text" id="nickname" value="" maxlength="30" role="textbox"
-        aria-label="Enter your nickname." data-lpignore="true" />
+        aria-label="Enter your nickname." data-lpignore="true" style="background-color:rgb(204, 197, 197);" />
     <label for="idcode">
     <dfn title="Only available via HTTPS. Provide a secret identification code to positively identify yourself in the chat.">
     Optional identification code:</dfn></label>
