@@ -74,7 +74,7 @@ created for the user now.
 <div id="welcome">
 
     <h1 tabindex="0">
-        Pretend You're <dfn
+        Pretendddddddddddd You're <dfn
             title="Xyzzy is an Artificial Unintelligence bot. You'll be making more sense than him in this game.">
         Xyzzy</dfn>
     </h1>
