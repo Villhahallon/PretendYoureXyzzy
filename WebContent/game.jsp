@@ -93,7 +93,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div>
   <h1 tabindex="0">
-    Pretend You're <dfn
+    Pretendddddddddddddd You're <dfn
     title="Xyzzy is an Artificial Unintelligence bot. You'll be making more sense than him in this game.">
     Xyzzy</dfn>
   </h1>
