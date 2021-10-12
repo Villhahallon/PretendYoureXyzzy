@@ -83,8 +83,8 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
 <jsp:include page="analytics.jsp" />
 </head>
-<body id="gamebody" style="background-color:rgb(104, 104, 104);">
-
+<body id="gamebody" style="background-image: url('https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/campaign/1476033/fd2a1aef5e3e41919ca77323741665e3/2.png?token-time=2145916800&token-hash=201FRqc46Se7y5qUiNX63n3NEvUbRTjKLFOLSWiOTGU%3D')">
+  <img style="user-select: none;margin: auto;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/campaign/1476033/fd2a1aef5e3e41919ca77323741665e3/2.png?token-time=2145916800&amp;token-hash=201FRqc46Se7y5qUiNX63n3NEvUbRTjKLFOLSWiOTGU%3D">
 <div id="welcome">
   <h1 tabindex="0">
     Pretend You're <dfn
