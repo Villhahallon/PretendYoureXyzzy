@@ -108,8 +108,9 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
     <span id="nickbox_error" class="error"></span>
   </div>
     <p>
-      If there is any problems, please contact <a href="https://discordapp.com/users/419129297253433345">(Vill)</a>
+      If there is any problems, please contact <a href="https://discordapp.com/users/419129297253433345">Vill</a>
     </p>
+    <iframe src="https://discord.com/widget?id=346861082536706048&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
   </p>
 </div>
 
