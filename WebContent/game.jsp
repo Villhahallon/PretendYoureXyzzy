@@ -83,7 +83,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
 <jsp:include page="analytics.jsp" />
 </head>
-<body id="gamebody">
+<body id="gamebody" style="background-color:rgb(104, 104, 104);">
 
 <div id="welcome">
   <h1 tabindex="0">
@@ -110,8 +110,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
     <p>
       If there is any problems, please contact <a href="https://discordapp.com/users/419129297253433345">Vill</a>
     </p>
-    <iframe src="https://discord.com/widget?id=346861082536706048&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-  </p>
+    <iframe src="https://discord.com/widget?id=299285489892982785&theme=dark" width="350" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>  </p>
 </div>
 
 <div id="canvas" class="hide">
