@@ -107,7 +107,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
     <input type="button" id="nicknameconfirm" value="Set" />
     <span id="nickbox_error" class="error"></span>
   </div>
-  If there is any problems, please contact Vill.
+  If there is any problems, please contact <a href="https://discordapp.com/users/419129297253433345">(Vill)</a>
   </p>
 </div>
 
