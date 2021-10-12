@@ -83,14 +83,10 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
 <jsp:include page="analytics.jsp" />
 </head>
-<body id="gamebody"
-      style="background-image: url('https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/campaign/1476033/fd2a1aef5e3e41919ca77323741665e3/2.png?token-time=2145916800&token-hash=201FRqc46Se7y5qUiNX63n3NEvUbRTjKLFOLSWiOTGU%3D')"
-      background-repeat:no-repeat;
-      background-size:cover;
->
+<body id="gamebody" style="background-image: url('https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/campaign/1476033/fd2a1aef5e3e41919ca77323741665e3/2.png?token-time=2145916800&token-hash=201FRqc46Se7y5qUiNX63n3NEvUbRTjKLFOLSWiOTGU%3D'); background-repeat: no-repeat; background-size: 100% 100%;">
 <!---   <img style="user-select: none;margin: auto;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/campaign/1476033/fd2a1aef5e3e41919ca77323741665e3/2.png?token-time=2145916800&amp;token-hash=201FRqc46Se7y5qUiNX63n3NEvUbRTjKLFOLSWiOTGU%3D"> -->
 <div id="welcome">
-  <h1 tabindex="0">
+  <h1 tabindex="0" style="color:powderblue;">
     Pretend You're <dfn
     title="Xyzzy is an Artificial Unintelligence bot. You'll be making more sense than him in this game.">
     Xyzzy,</dfn>
@@ -99,10 +95,10 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
   <h3>A <a href="http://cardsagainsthumanity.com/">Cards Against Humanity</a> clone.</h3>
   <p>
   <div id="nickbox">
-    <label for="nickname">Nickname:</label>
+    <label for="nickname" style="color:powderblue;">Nickname:</label>
     <input type="text" id="nickname" value="" maxlength="30" role="textbox"
         aria-label="Enter your nickname." data-lpignore="true" style="background-color:rgb(204, 197, 197);" />
-    <label for="idcode">
+    <label for="idcode" style="color:powderblue;">
     <dfn title="Only available via HTTPS. Provide a secret identification code to positively identify yourself in the chat.">
     Optional identification code:</dfn></label>
     <input type="password" id="idcode" value="" maxlength="100" disabled="disabled"
@@ -111,7 +107,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
     <input type="button" id="nicknameconfirm" value="Set" />
     <span id="nickbox_error" class="error"></span>
   </div>
-    <p>
+    <p style="color:rgb(230, 172, 13);">
       If there is any problems, please contact <a href="https://discordapp.com/users/419129297253433345">Vill</a>
     </p>
     <iframe src="https://discord.com/widget?id=299285489892982785&theme=dark" width="350" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>  </p>
