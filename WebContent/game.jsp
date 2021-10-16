@@ -312,14 +312,14 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
           disabled="disabled" />
       <input type="button" class="game_show_options game_menu_bar" value="Hide Game Options" />
       <label class="game_menu_bar checkbox"><input type="checkbox" class="game_animate_cards" checked="checked" /><span> Animate Cards</span></label>
-      <div class="game_message" role="status">
+      <div style="color:powderblue;" class="game_message" role="status">
         Waiting for server...
       </div>
     </div>
     <div style="width:100%; height:472px;">
       <div style="width:100%; height:100%;">
         <div class="game_left_side">
-          <div class="game_black_card_wrapper">
+          <div style="color:powderblue;" class="game_black_card_wrapper">
             <span tabindex="0">The black card for
                 <span class="game_black_card_round_indicator">this round is</span>:
             </span>
@@ -332,11 +332,11 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
         </div>
         <div class="game_right_side hide">
           <div class="game_right_side_box game_white_card_wrapper">
-            <span tabindex="0">The white cards played this round are:</span>
+            <span style="color:powderblue;" tabindex="0">The white cards played this round are:</span>
             <div class="game_white_cards game_right_side_cards">
             </div>
           </div>
-          <div class="game_right_side_box game_last_round hide">
+          <div style="color:powderblue;" class="game_right_side_box game_last_round hide">
             The previous round was won by <span class="game_last_round_winner"></span>.
             <div class="game_last_round_cards game_right_side_cards">
             </div>
@@ -358,7 +358,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
 <!-- Template for scoreboard container. Holder for design. -->
 <div style="height: 215px; border: 1px solid black;" class="hide">
 	<div id="scoreboard_template" class="scoreboard">
-    <div class="game_message" tabindex="0">Scoreboard</div>
+    <div style="color:powderblue;" class="game_message" tabindex="0">Scoreboard</div>
 	</div>
 </div>
 
