@@ -92,24 +92,24 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
     Xyzzy,</dfn>
     A Cubed Chaos Version...
   </h1>
-  <h3>A <a href="http://cardsagainsthumanity.com/">Cards Against Humanity</a> clone.</h3>
+  <h3 style="color:powderblue;">A <a style="color:powderblue;" href="http://cardsagainsthumanity.com/">Cards Against Humanity</a> clone.</h3>
   <p>
   <div id="nickbox">
     <label for="nickname" style="color:powderblue;">Nickname:</label>
     <input type="text" id="nickname" value="" maxlength="30" role="textbox"
         aria-label="Enter your nickname." data-lpignore="true" style="background-color:rgb(204, 197, 197);" />
     <label for="idcode" style="color:powderblue;">
-    <dfn title="Only available via HTTPS. Provide a secret identification code to positively identify yourself in the chat.">
+    <dfn  title="Only available via HTTPS. Provide a secret identification code to positively identify yourself in the chat.">
     Optional identification code:</dfn></label>
-    <input type="password" id="idcode" value="" maxlength="100" disabled="disabled"
+    <input style="background-color:rgb(204, 197, 197);" type="password" id="idcode" value="" maxlength="100" disabled="disabled"
         aria-label="Optionally enter an identification code." />
     <a href="https://github.com/ajanata/PretendYoureXyzzy/wiki/Identification-Codes">(Help)</a>
     <input type="button" id="nicknameconfirm" value="Set" />
     <span id="nickbox_error" class="error"></span>
   </div>
-    <p style="color:rgb(230, 172, 13);">
-      If there is any problems, please contact <a href="https://discordapp.com/users/419129297253433345">Vill</a>
-    </p>
+  <p style="color:yellow;">
+    If there is any problems, please contact <a href="https://discordapp.com/users/419129297253433345" style="color:yellow;">Vill</a>
+  </p>
     <iframe src="https://discord.com/widget?id=299285489892982785&theme=dark" width="350" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>  </p>
 </div>
 
@@ -311,7 +311,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
       <input type="button" class="game_show_last_round game_menu_bar" value="Show Last Round"
           disabled="disabled" />
       <input type="button" class="game_show_options game_menu_bar" value="Hide Game Options" />
-      <label class="game_menu_bar checkbox"><input type="checkbox" class="game_animate_cards" checked="checked" /><span> Animate Cards</span></label>
+      <label style="color:powderblue;" class="game_menu_bar checkbox"><input type="checkbox" class="game_animate_cards" checked="checked" /><span> Animate Cards</span></label>
       <div style="color:powderblue;" class="game_message" role="status">
         Waiting for server...
       </div>
