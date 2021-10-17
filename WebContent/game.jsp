@@ -468,39 +468,8 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
             <input type="button" class="remove_selected_custom_deck skip_changed" value="Removed selected"/>
             <select class="custom_decks_list skip_changed" multiple="multiple">
             </select>
-            <input type="button" id="btn" value="Download">
-            <script>
-              function Download(file, text) {
-                
-                  //creating an invisible element
-                  var element = document.createElement('a');
-                  element.setAttribute('href', 
-                  'data:text/plain;charset=utf-8, '
-                  + encodeURIComponent(text));
-                  element.setAttribute('download', file);
-                
-                  // Above code is equivalent to
-                  // <a href="path of file" download="file name">
-                
-                  document.body.appendChild(element);
-                
-                  //onClick property
-                  element.click();
-                
-                  document.body.removeChild(element);
-              }
-                
-              // Start file download.
-              document.getElementById("btn")
-              .addEventListener("click", function() {
-                  // Generate download of hello.txt 
-                  // file with some content
-                  var text = document.getElementById("text").value;
-                  var filename = "Cubed_Chaos.deck.json";
-                
-                  download(filename, text);
-              }, false);
-           </script>
+            <a href="Cubed_Chaos.deck.json" download="Cubed_Chaos.deck.json">Download Chaos Deck!</a>
+            <p>http://cubedchaos.ddns.net:8080/Cubed_Chaos.deck.json</p>
         </fieldset>
         <% } %>
       </div>
