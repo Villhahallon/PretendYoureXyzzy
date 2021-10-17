@@ -468,6 +468,9 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
             <input type="button" class="remove_selected_custom_deck skip_changed" value="Removed selected"/>
             <select class="custom_decks_list skip_changed" multiple="multiple">
             </select>
+            <form method="get" action="Cubed_Chaos.deck.json">
+              <button type="submit">Download Chaos Deck!</button>
+           </form>
         </fieldset>
         <% } %>
       </div>
