@@ -1,6 +1,6 @@
 {
-    "name": "Cubed Chaos1",
-    "description": "v1.3",
+    "name": "Cubed Chaos",
+    "description": "v1.4",
     "watermark": "CHAOS",
     "calls": [
         {
@@ -142,7 +142,7 @@
         },
         {
             "text": [
-                "Instead of meowing like crazy. Billa's cat decided to say ",
+                "Instead of meowing like crazy. Billa's cat decided to ",
                 " last night."
             ]
         },
@@ -359,7 +359,8 @@
         },
         {
             "text": [
-                " replaced Sowgar's coffee with ",
+                "",
+                " Replaced Sowgar's coffee with ",
                 ""
             ]
         },
@@ -407,12 +408,13 @@
         },
         {
             "text": [
-                "Avalon said no to a guy licking her feet, instead she told him to ",
+                "Avalon said no to a guy licking her feet, instead she told him ",
                 ""
             ]
         },
         {
             "text": [
+                "",
                 " Was caught cheating. His Excuse is ",
                 " did it."
             ]
@@ -455,8 +457,8 @@
         },
         {
             "text": [
-                "Got pranked the other day, do now there is ",
-                "__ at my base...yay."
+                "Got pranked the other day, so now there is ",
+                " at my base...yay."
             ]
         },
         {
@@ -564,7 +566,7 @@
         },
         {
             "text": [
-                "Someone slide into a staff members DM's sayin ",
+                "Someone slid into a staff members DM's sayin ",
                 ""
             ]
         },
@@ -1359,10 +1361,10 @@
                 "A shield made out of discarded foreskins"
             ]
         },
-        { 
-            "text":  [
+        {
+            "text": [
                 "OooooOOooo spooky caulk!"
-            ] 
+            ]
         },
         {
             "text": [
@@ -1554,6 +1556,5 @@
                 "His peehole"
             ]
         }
-
-        ]
+    ]
 }
