@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2017, Andy Janata
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ *
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,17 +23,19 @@
 
 package net.socialgamer.cah.metrics;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
-import net.socialgamer.cah.CahModule.ServerStarted;
-import org.apache.log4j.Logger;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
+
+import net.socialgamer.cah.CahModule.ServerStarted;
+
+import org.apache.log4j.Logger;
+
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 
 /**
@@ -53,6 +55,9 @@ public class UniqueIds implements Provider<String> {
 
   private static final String hostname;
 
+  private final AtomicLong counter = new AtomicLong(0);
+  private final Date serverStarted;
+
   static {
     String hn;
     try {
@@ -63,9 +68,6 @@ public class UniqueIds implements Provider<String> {
     }
     hostname = hn;
   }
-
-  private final AtomicLong counter = new AtomicLong(0);
-  private final Date serverStarted;
 
   @Inject
   public UniqueIds(@ServerStarted final Date serverStarted) {

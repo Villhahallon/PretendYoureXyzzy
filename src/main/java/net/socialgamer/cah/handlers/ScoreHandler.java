@@ -1,16 +1,23 @@
 package net.socialgamer.cah.handlers;
 
-import com.google.inject.Inject;
-import net.socialgamer.cah.Constants.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import net.socialgamer.cah.Constants.AjaxOperation;
+import net.socialgamer.cah.Constants.AjaxRequest;
+import net.socialgamer.cah.Constants.AjaxResponse;
+import net.socialgamer.cah.Constants.ErrorCode;
+import net.socialgamer.cah.Constants.ReturnableData;
+import net.socialgamer.cah.Constants.SessionAttribute;
 import net.socialgamer.cah.RequestWrapper;
 import net.socialgamer.cah.data.ConnectedUsers;
 import net.socialgamer.cah.data.Game;
 import net.socialgamer.cah.data.Player;
 import net.socialgamer.cah.data.User;
 
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.inject.Inject;
 
 
 public class ScoreHandler extends Handler {
@@ -30,7 +37,7 @@ public class ScoreHandler extends Handler {
     assert (user != null);
     final String params = request.getParameter(AjaxRequest.MESSAGE);
     final String[] args = (params == null || params.isEmpty()) ? new String[0] : params.trim()
-            .split(" ");
+        .split(" ");
 
     final User target = (args.length > 0) ? connectedUsers.getUser(args[0]) : user;
     if (null == target) {
@@ -45,7 +52,7 @@ public class ScoreHandler extends Handler {
       return error(ErrorCode.INVALID_GAME);
     }
 
-    final Map<ReturnableData, Object> data = new HashMap<>();
+    final Map<ReturnableData, Object> data = new HashMap<ReturnableData, Object>();
 
     if (user.isAdmin() && args.length == 2) {
       // for now only admins can change scores.  could possibly extend this to let the host do it,

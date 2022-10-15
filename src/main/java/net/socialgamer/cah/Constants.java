@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2018, Andy Janata
+ * Copyright (c) 2012-2020, Andy Janata
  * All rights reserved.
  * <p>
  * Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -32,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Constants needed on both the CAH server and client. This file is examined with reflection to
  * produce a Javascript version for the client to use.
- *
+ * <p>
  * All of the enums in here take a string in their constructor to define the over-the-wire value to
  * be used to represent that enum value. This allows for verbose names while debugging, and short
  * names to reduce traffic and latency, by only having to change it in one place for both the server
@@ -92,7 +92,7 @@ public class Constants {
 
   /**
    * The next thing the client should do during reconnect phase.
-   *
+   * <p>
    * Leaving these as longer strings as they are only used once per client.
    */
   public enum ReconnectNextAction {
@@ -124,9 +124,9 @@ public class Constants {
   public enum AjaxOperation {
     ADMIN_SET_VERBOSE_LOG("svl"),
     BAN("b"),
-    CARDCAST_ADD_CARDSET("cac"),
-    CARDCAST_LIST_CARDSETS("clc"),
-    CARDCAST_REMOVE_CARDSET("crc"),
+    ADD_CARDSET("acs"),
+    LIST_CARDSETS("lcs"),
+    REMOVE_CARDSET("rcs"),
     CHANGE_GAME_OPTIONS("cgo"),
     CHAT("c"),
     CREATE_GAME("cg"),
@@ -174,7 +174,10 @@ public class Constants {
   public enum AjaxRequest {
     @GoDataType("int")
     CARD_ID("cid"),
-    CARDCAST_ID("cci"),
+    @GoDataType("int")
+    CUSTOM_CARDSET_ID("cci"),
+    CUSTOM_CARDSET_URL("ccu"),
+    CUSTOM_CARDSET_JSON("ccj"),
     @GoDataType("bool")
     EMOTE("me"),
     @GoDataType("int")
@@ -238,6 +241,8 @@ public class Constants {
     GAME_PERMALINK("gp"),
     @GoDataType("[]GameInfo")
     GAMES("gl"),
+    @GoDataType("bool")
+    GAME_CHAT_ENABLED("Gce"),
     @GoDataType("bool")
     GLOBAL_CHAT_ENABLED("gce"),
     @GoDataType("[]int")
@@ -328,21 +333,20 @@ public class Constants {
     BANNED(DisconnectReason.BANNED, "Banned."),
     CANNOT_JOIN_ANOTHER_GAME("cjag", "You cannot join another game."),
     CAPSLOCK("CL", "Try turning caps lock off."),
-    CARDCAST_CANNOT_FIND("ccf", "Cannot find Cardcast deck with given ID. If you just added this"
-            + " deck to Cardcast, wait a few minutes and try again."),
-    CARDCAST_INVALID_ID("cii", "Invalid Cardcast ID. Must be exactly 5 characters."),
+    CUSTOM_SET_CANNOT_FIND("cscf", "Cannot find custom deck with the given ID or URL or invalid JSON "
+        + "was provided."),
     DO_NOT_HAVE_CARD("dnhc", "You don't have that card."),
     GAME_FULL("gf", "That game is full. Join another."),
     INVALID_CARD("ic", "Invalid card specified."),
     INVALID_GAME("ig", "Invalid game specified."),
     INVALID_ID_CODE("iid", "Identification code, if provided, must be between 8 and 100 characters,"
-            + " inclusive."),
+        + " inclusive."),
     /**
      * TODO this probably should be pulled in from a static inside the RegisterHandler.
      */
     INVALID_NICK("in", "Nickname must contain only upper and lower case letters, " +
-            "numbers, or underscores, must be 3 to 30 characters long, and must not start with a " +
-            "number."),
+        "numbers, or underscores, must be 3 to 30 characters long, and must not start with a " +
+        "number."),
     /**
      * TODO this probably should be pulled in from a static inside the ChatHandler.
      */
@@ -356,8 +360,8 @@ public class Constants {
     NO_SUCH_USER("nsu", "No such user."),
     NOT_ADMIN("na", "You are not an administrator."),
     NOT_ENOUGH_CARDS("nec", "You must add card sets containing at least "
-            + Game.MINIMUM_BLACK_CARDS + " black cards and " + Game.MINIMUM_WHITE_CARDS_PER_PLAYER
-            + " times the player limit white cards."),
+        + Game.MINIMUM_BLACK_CARDS + " black cards and " + Game.MINIMUM_WHITE_CARDS_PER_PLAYER
+        + " times the player limit white cards."),
     NOT_ENOUGH_PLAYERS("nep", "There are not enough players to start the game."),
     NOT_ENOUGH_SPACES("nes", "You must use more words in a message that long."),
     NOT_GAME_HOST("ngh", "Only the game host can do that."),
@@ -369,27 +373,25 @@ public class Constants {
     PLAYED_ALL_CARDS("pac", "You already played all the necessary cards!"),
     RESERVED_NICK("rn", "That nick is reserved."),
     REPEAT_MESSAGE("rm",
-            "You can't repeat the same message multiple times in a row."),
+        "You can't repeat the same message multiple times in a row."),
     REPEATED_WORDS("rW", "You must use more unique words in your message."),
     SERVER_ERROR("serr", "An error occurred on the server."),
     SESSION_EXPIRED("se", "Your session has expired. Refresh the page."),
     TOO_FAST("tf", "You are chatting too fast. Wait a few seconds and try again."),
     TOO_MANY_GAMES("tmg", "There are too many games already in progress. Either join " +
-            "an existing game, or wait for one to become available."),
+        "an existing game, or wait for one to become available."),
     TOO_MANY_SPECIAL_CHARACTERS("tmsc",
-            "You used too many special characters in that message."),
-    TOO_MANY_USERS("tmu", "There are too many users connected. Either join another server, or " +
-            "wait for a user to disconnect."),
+        "You used too many special characters in that message."),
+    TOO_MANY_USERS("tmu", "There are too many users connected. "
+        + "<strong><a href='https://pretendyoure.xyz/zy'>Try another server.</a></strong>"),
     WRONG_PASSWORD("wp", "That password is incorrect.");
 
     private final String code;
     private final String message;
 
     /**
-     * @param code
-     *          Error code to send over the wire to the client.
-     * @param message
-     *          Message the client should display for the error code.
+     * @param code    Error code to send over the wire to the client.
+     * @param message Message the client should display for the error code.
      */
     ErrorCode(final String code, final String message) {
       this.code = code;
@@ -419,9 +421,9 @@ public class Constants {
     @DuplicationAllowed
     BANNED(DisconnectReason.BANNED),
     @DuplicationAllowed
-    CARDCAST_ADD_CARDSET(AjaxOperation.CARDCAST_ADD_CARDSET),
+    ADD_CARDSET(AjaxOperation.ADD_CARDSET),
     @DuplicationAllowed
-    CARDCAST_REMOVE_CARDSET(AjaxOperation.CARDCAST_REMOVE_CARDSET),
+    REMOVE_CARDSET(AjaxOperation.REMOVE_CARDSET),
     @DuplicationAllowed
     CHAT(AjaxOperation.CHAT),
     FILTERED_CHAT("FC"),
@@ -477,7 +479,7 @@ public class Constants {
     @DuplicationAllowed
     @GoDataType("BlackCardData")
     BLACK_CARD(AjaxResponse.BLACK_CARD),
-    CARDCAST_DECK_INFO("cdi"),
+    CUSTOM_DECK_INFO("cdi"),
     @DuplicationAllowed
     @GoDataType("bool")
     EMOTE(AjaxRequest.EMOTE),
@@ -493,6 +495,7 @@ public class Constants {
     FROM("f"),
     /**
      * A chat message is from an admin. This is going to be done with IP addresses for now.
+     *
      * @deprecated Compare the SIGIL field to Sigil.ADMIN.
      */
     @Deprecated
@@ -661,6 +664,8 @@ public class Constants {
     CARD_SET_DESCRIPTION("csd"),
     CARD_SET_NAME("csn"),
     @DuplicationAllowed
+    WATERMARK(WhiteCardData.WATERMARK),
+    @DuplicationAllowed
     @GoDataType("int")
     ID(WhiteCardData.ID),
     @GoDataType("int")
@@ -726,6 +731,8 @@ public class Constants {
     @DuplicationAllowed
     @GoDataType("GameOptionData")
     GAME_OPTIONS(AjaxRequest.GAME_OPTIONS),
+    @GoDataType("[]CardSetData")
+    CUSTOM_CARD_SETS("ccs"),
     @GoDataType("bool")
     HAS_PASSWORD("hp"),
     @GoDataType("[]string")
@@ -856,14 +863,14 @@ public class Constants {
 
   /**
    * Enums that implement this interface have a user-visible string associated with them.
-   *
+   * <p>
    * There presently is not support for localization, but the name fits.
    */
   public interface Localizable {
     /**
      * @return The user-visible string that is associated with this enum value.
      */
-    String getString();
+    public String getString();
   }
 
   /**
@@ -875,12 +882,12 @@ public class Constants {
     /**
      * @return The first user-visible string that is associated with this enum value.
      */
-    String getString();
+    public String getString();
 
     /**
      * @return The second user-visible string that is associated with this enum value.
      */
-    String getString2();
+    public String getString2();
   }
 
   /**

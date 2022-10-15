@@ -1,31 +1,41 @@
 package net.socialgamer.cah.handlers;
 
-import com.google.inject.Inject;
-import net.socialgamer.cah.Constants.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import com.google.inject.Provider;
+import net.socialgamer.cah.CahModule;
+import net.socialgamer.cah.Constants.AjaxOperation;
+import net.socialgamer.cah.Constants.AjaxRequest;
+import net.socialgamer.cah.Constants.ErrorCode;
+import net.socialgamer.cah.Constants.GameState;
+import net.socialgamer.cah.Constants.ReturnableData;
 import net.socialgamer.cah.RequestWrapper;
 import net.socialgamer.cah.data.Game;
 import net.socialgamer.cah.data.GameManager;
 import net.socialgamer.cah.data.GameOptions;
 import net.socialgamer.cah.data.User;
 
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.inject.Inject;
 
 
 public class ChangeGameOptionHandler extends GameWithPlayerHandler {
 
   public static final String OP = AjaxOperation.CHANGE_GAME_OPTIONS.toString();
+  private Provider<GameOptions> gameOptionsProvider;
 
   @Inject
-  public ChangeGameOptionHandler(final GameManager gameManager) {
+  public ChangeGameOptionHandler(final GameManager gameManager, Provider<GameOptions> gameOptionsProvider) {
     super(gameManager);
+    this.gameOptionsProvider = gameOptionsProvider;
   }
 
   @Override
   public Map<ReturnableData, Object> handleWithUserInGame(final RequestWrapper request,
-                                                          final HttpSession session, final User user, final Game game) {
-    final Map<ReturnableData, Object> data = new HashMap<>();
+      final HttpSession session, final User user, final Game game) {
+    final Map<ReturnableData, Object> data = new HashMap<ReturnableData, Object>();
 
     if (game.getHost() != user) {
       return error(ErrorCode.NOT_GAME_HOST);
@@ -34,7 +44,7 @@ public class ChangeGameOptionHandler extends GameWithPlayerHandler {
     } else {
       try {
         final String value = request.getParameter(AjaxRequest.GAME_OPTIONS);
-        final GameOptions options = GameOptions.deserialize(value);
+        final GameOptions options = GameOptions.deserialize(gameOptionsProvider, value);
         final String oldPassword = game.getPassword();
         game.updateGameSettings(options);
 

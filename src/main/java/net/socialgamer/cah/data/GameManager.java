@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012, Andy Janata
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ *
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,19 +23,25 @@
 
 package net.socialgamer.cah.data;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.apache.log4j.Logger;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.BindingAnnotation;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
+
 import net.socialgamer.cah.data.Game.TooManyPlayersException;
 import net.socialgamer.cah.data.GameManager.GameId;
 import net.socialgamer.cah.task.BroadcastGameListUpdateTask;
-import org.apache.log4j.Logger;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.util.*;
 
 
 /**
@@ -51,7 +57,7 @@ public class GameManager implements Provider<Integer> {
   private static final Logger logger = Logger.getLogger(GameManager.class);
 
   private final Provider<Integer> maxGamesProvider;
-  private final Map<Integer, Game> games = new TreeMap<>();
+  private final Map<Integer, Game> games = new TreeMap<Integer, Game>();
   private final Provider<Game> gameProvider;
   private final BroadcastGameListUpdateTask broadcastUpdate;
 
@@ -67,11 +73,13 @@ public class GameManager implements Provider<Integer> {
    *          Provider for new {@code Game} instances.
    * @param maxGamesProvider
    *          Provider for maximum number of games allowed on the server.
+   * @param users
+   *          Connected user manager.
    */
   @Inject
   public GameManager(final Provider<Game> gameProvider,
-                     @MaxGames final Provider<Integer> maxGamesProvider,
-                     final BroadcastGameListUpdateTask broadcastUpdate) {
+      @MaxGames final Provider<Integer> maxGamesProvider,
+      final BroadcastGameListUpdateTask broadcastUpdate) {
     this.gameProvider = gameProvider;
     this.maxGamesProvider = maxGamesProvider;
     this.broadcastUpdate = broadcastUpdate;
@@ -124,7 +132,7 @@ public class GameManager implements Provider<Integer> {
       try {
         game.addPlayer(user);
         logger.info(String.format("Created new game %d by user %s.",
-                game.getId(), user.toString()));
+            game.getId(), user.toString()));
       } catch (final IllegalStateException ise) {
         destroyGame(game.getId());
         throw ise;
@@ -237,7 +245,7 @@ public class GameManager implements Provider<Integer> {
   public Collection<Game> getGameList() {
     synchronized (games) {
       // return a copy
-      return new ArrayList<>(games.values());
+      return new ArrayList<Game>(games.values());
     }
   }
 

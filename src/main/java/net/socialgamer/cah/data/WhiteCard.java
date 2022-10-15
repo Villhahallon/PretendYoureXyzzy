@@ -1,24 +1,12 @@
 package net.socialgamer.cah.data;
 
-import net.socialgamer.cah.Constants.WhiteCardData;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import net.socialgamer.cah.Constants.WhiteCardData;
+
 
 public abstract class WhiteCard {
-
-  /**
-   * @return Client representation of a face-down White Card.
-   */
-  public static Map<WhiteCardData, Object> getFaceDownCardClientData() {
-    final Map<WhiteCardData, Object> cardData = new HashMap<>();
-    cardData.put(WhiteCardData.ID, -1);
-    cardData.put(WhiteCardData.TEXT, "");
-    cardData.put(WhiteCardData.WATERMARK, "");
-    cardData.put(WhiteCardData.WRITE_IN, false);
-    return cardData;
-  }
 
   public abstract int getId();
 
@@ -45,7 +33,7 @@ public abstract class WhiteCard {
    * @return Client representation of this card.
    */
   public final Map<WhiteCardData, Object> getClientData() {
-    final Map<WhiteCardData, Object> cardData = new HashMap<>();
+    final Map<WhiteCardData, Object> cardData = new HashMap<WhiteCardData, Object>();
     cardData.put(WhiteCardData.ID, getId());
     cardData.put(WhiteCardData.TEXT, getText());
     cardData.put(WhiteCardData.WATERMARK, getWatermark());
@@ -53,10 +41,22 @@ public abstract class WhiteCard {
     return cardData;
   }
 
+  /**
+   * @return Client representation of a face-down White Card.
+   */
+  public static final Map<WhiteCardData, Object> getFaceDownCardClientData() {
+    final Map<WhiteCardData, Object> cardData = new HashMap<WhiteCardData, Object>();
+    cardData.put(WhiteCardData.ID, -1);
+    cardData.put(WhiteCardData.TEXT, "");
+    cardData.put(WhiteCardData.WATERMARK, "");
+    cardData.put(WhiteCardData.WRITE_IN, false);
+    return cardData;
+  }
+
   @Override
   public String toString() {
     return String.format("%s %s (id:%d, watermark:%s)", getClass().getName(), getText(), getId(),
-            getWatermark());
+        getWatermark());
   }
 
 }

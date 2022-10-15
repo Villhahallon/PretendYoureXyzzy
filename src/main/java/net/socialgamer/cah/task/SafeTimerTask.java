@@ -11,8 +11,8 @@ public abstract class SafeTimerTask implements Runnable {
   public final void run() {
     try {
       process();
-    } catch (Exception ex) {
-      logger.error("Exception running SafeTimerTask", ex);
+    } catch (final Exception e) {
+      logger.error("Exception running SafeTimerTask", e);
     }
   }
 

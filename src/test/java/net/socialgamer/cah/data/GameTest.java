@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012-2018, Andy Janata
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ *
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,19 +23,29 @@
 
 package net.socialgamer.cah.data;
 
-import com.google.inject.Provider;
-import net.socialgamer.cah.data.Game.TooManyPlayersException;
-import net.socialgamer.cah.data.QueuedMessage.MessageType;
-import net.socialgamer.cah.metrics.Metrics;
-import org.junit.Before;
-import org.junit.Test;
+import static org.easymock.EasyMock.anyInt;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.google.inject.Provider;
+
+import net.socialgamer.cah.data.Game.TooManyPlayersException;
+import net.socialgamer.cah.data.QueuedMessage.MessageType;
+import net.socialgamer.cah.metrics.Metrics;
 
 
 /**
@@ -45,7 +55,20 @@ import static org.junit.Assert.*;
  */
 public class GameTest {
 
+  private Game game;
+  private ConnectedUsers cuMock;
+  private GameManager gmMock;
+  private Metrics metricsMock;
   private final ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(1);
+  private final Provider<GameOptions> gameOptionsProvider = new Provider<GameOptions>() {
+    @Override
+    public GameOptions get() {
+      return new GameOptions(20, 10, 3,
+              20, 10, 0,
+              4, 69, 8,
+              0, 0, 30);
+    }
+  };
   private final Provider<Boolean> falseProvider = new Provider<Boolean>() {
     @Override
     public Boolean get() {
@@ -58,25 +81,21 @@ public class GameTest {
       return "%s";
     }
   };
-  private Game game;
-  private ConnectedUsers cuMock;
-  private GameManager gmMock;
-  private Metrics metricsMock;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     cuMock = createMock(ConnectedUsers.class);
     gmMock = createMock(GameManager.class);
     metricsMock = createMock(Metrics.class);
     game = new Game(0, cuMock, gmMock, timer, null, null, null, metricsMock, falseProvider,
-            formatProvider, falseProvider, formatProvider);
+        formatProvider, falseProvider, formatProvider, falseProvider, gameOptionsProvider);
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testRemovePlayer() throws IllegalStateException, TooManyPlayersException {
     cuMock.broadcastToList(anyObject(Collection.class), eq(MessageType.GAME_PLAYER_EVENT),
-            anyObject(HashMap.class));
+        anyObject(HashMap.class));
     expectLastCall().times(4);
     replay(cuMock);
     gmMock.destroyGame(anyInt());
@@ -92,7 +111,7 @@ public class GameTest {
     assertFalse(game.removePlayer(user1));
     assertEquals(user2, game.getHost());
     assertTrue(game.removePlayer(user2));
-    assertNull(game.getHost());
+    assertEquals(null, game.getHost());
 
     verify(cuMock);
     verify(gmMock);

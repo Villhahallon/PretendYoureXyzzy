@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012-2017, Andy Janata
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ *
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,8 +23,13 @@
 
 package net.socialgamer.cah.data;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -39,11 +44,11 @@ public class PlayerPlayedCardsTracker {
   /**
    * Forward mapping of player to cards.
    */
-  private final Map<Player, List<WhiteCard>> playerCardMap = new HashMap<>();
+  private final Map<Player, List<WhiteCard>> playerCardMap = new HashMap<Player, List<WhiteCard>>();
   /**
    * Reverse mapping of cards to player.
    */
-  private final Map<Integer, Player> reverseIdMap = new HashMap<>();
+  private final Map<Integer, Player> reverseIdMap = new HashMap<Integer, Player>();
 
   /**
    * Add a played card to the mappings.
@@ -54,12 +59,11 @@ public class PlayerPlayedCardsTracker {
    *          The card the player played.
    */
   public synchronized void addCard(final Player player, final WhiteCard card) {
-    List<WhiteCard> cards = playerCardMap.computeIfAbsent(player, new Function<Player, List<WhiteCard>>() {
-      @Override
-      public List<WhiteCard> apply(Player player) {
-        return new ArrayList<>(3);
-      }
-    });
+    List<WhiteCard> cards = playerCardMap.get(player);
+    if (cards == null) {
+      cards = new ArrayList<WhiteCard>(3);
+      playerCardMap.put(player, cards);
+    }
     reverseIdMap.put(card.getId(), player);
     cards.add(card);
   }

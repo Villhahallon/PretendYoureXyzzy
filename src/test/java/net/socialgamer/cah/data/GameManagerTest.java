@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012-2018, Andy Janata
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ *
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,29 +23,40 @@
 
 package net.socialgamer.cah.data;
 
-import com.google.inject.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.*;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.socialgamer.cah.CahModule;
 import net.socialgamer.cah.CahModule.*;
-import net.socialgamer.cah.HibernateUtil;
-import net.socialgamer.cah.cardcast.CardcastModule.CardcastCardId;
-import net.socialgamer.cah.data.GameManager.GameId;
-import net.socialgamer.cah.data.GameManager.MaxGames;
-import net.socialgamer.cah.data.QueuedMessage.MessageType;
-import net.socialgamer.cah.metrics.Metrics;
-import net.socialgamer.cah.metrics.NoOpMetrics;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.annotation.Nonnull;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Provider;
+import com.google.inject.Provides;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import net.socialgamer.cah.HibernateUtil;
+import net.socialgamer.cah.data.GameManager.GameId;
+import net.socialgamer.cah.data.GameManager.MaxGames;
+import net.socialgamer.cah.data.QueuedMessage.MessageType;
+import net.socialgamer.cah.metrics.Metrics;
+import net.socialgamer.cah.metrics.NoOpMetrics;
 
 
 /**
@@ -55,7 +66,22 @@ import static org.junit.Assert.*;
  */
 public class GameManagerTest {
 
+  private Injector injector;
+  private GameManager gameManager;
+  private ConnectedUsers cuMock;
+  private User userMock;
+  private int gameId;
   private final ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(1);
+  private Metrics metricsMock;
+  private final Provider<GameOptions> gameOptionsProvider = new Provider<GameOptions>() {
+    @Override
+    public GameOptions get() {
+      return new GameOptions(20, 10, 3,
+              20, 10, 0,
+              4, 69, 8,
+              0, 0, 30);
+    }
+  };
   private final Provider<Boolean> falseProvider = new Provider<Boolean>() {
     @Override
     public Boolean get() {
@@ -68,15 +94,9 @@ public class GameManagerTest {
       return "%s";
     }
   };
-  private Injector injector;
-  private GameManager gameManager;
-  private ConnectedUsers cuMock;
-  private User userMock;
-  private int gameId;
-  private Metrics metricsMock;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     cuMock = createMock(ConnectedUsers.class);
     userMock = createMock(User.class);
     metricsMock = createMock(Metrics.class);
@@ -87,24 +107,26 @@ public class GameManagerTest {
         bind(ConnectedUsers.class).toInstance(cuMock);
 
         final ScheduledThreadPoolExecutor threadPool =
-                new ScheduledThreadPoolExecutor(1,
-                        new ThreadFactory() {
-                          final AtomicInteger threadCount = new AtomicInteger();
+            new ScheduledThreadPoolExecutor(1,
+                new ThreadFactory() {
+                  final AtomicInteger threadCount = new AtomicInteger();
 
-                          @Override
-                          public Thread newThread(@Nonnull final Runnable r) {
-                            final Thread t = new Thread(r);
-                            t.setDaemon(true);
-                            t.setName("timer-task-" + threadCount.incrementAndGet());
-                            return t;
-                          }
-                        });
+                  @Override
+                  public Thread newThread(final Runnable r) {
+                    final Thread t = new Thread(r);
+                    t.setDaemon(true);
+                    t.setName("timer-task-" + threadCount.incrementAndGet());
+                    return t;
+                  }
+                });
         bind(ScheduledThreadPoolExecutor.class).toInstance(threadPool);
         bind(Metrics.class).to(NoOpMetrics.class);
         bind(Boolean.class).annotatedWith(ShowRoundPermalink.class).toProvider(falseProvider);
         bind(String.class).annotatedWith(RoundPermalinkUrlFormat.class).toProvider(formatProvider);
         bind(Boolean.class).annotatedWith(ShowGamePermalink.class).toProvider(falseProvider);
         bind(String.class).annotatedWith(GamePermalinkUrlFormat.class).toProvider(formatProvider);
+        bind(Boolean.class).annotatedWith(AllowBlankCards.class).toProvider(falseProvider);
+        bind(GameOptions.class).toProvider(gameOptionsProvider);
       }
 
       @Provides
@@ -125,15 +147,21 @@ public class GameManagerTest {
       }
 
       @Provides
-      @CardcastCardId
-      Integer provideCardcastCardId() {
-        return 0;
-      }
-
-      @Provides
       @UniqueId
       String provideUniqueId() {
         return "1";
+      }
+
+      @Provides
+      @CustomDecksEnabled
+      Boolean provideCustomDecksEnabled() {
+        return true;
+      }
+
+      @Provides
+      @CustomDecksAllowedUrls
+      List<String> provideAllowedCustomDecksUrls() {
+        return Collections.singletonList("*");
       }
     });
 
@@ -154,16 +182,16 @@ public class GameManagerTest {
     // fill it up with 3 games
     assertEquals(0, gameManager.get().intValue());
     gameManager.getGames().put(0,
-            new Game(0, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
-                    formatProvider, falseProvider, formatProvider));
+        new Game(0, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
+            formatProvider, falseProvider, formatProvider, falseProvider, gameOptionsProvider));
     assertEquals(1, gameManager.get().intValue());
     gameManager.getGames().put(1,
-            new Game(1, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
-                    formatProvider, falseProvider, formatProvider));
+        new Game(1, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
+            formatProvider, falseProvider, formatProvider, falseProvider, gameOptionsProvider));
     assertEquals(2, gameManager.get().intValue());
     gameManager.getGames().put(2,
-            new Game(2, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
-                    formatProvider, falseProvider, formatProvider));
+        new Game(2, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
+            formatProvider, falseProvider, formatProvider, falseProvider, gameOptionsProvider));
     // make sure it says it can't make any more
     assertEquals(-1, gameManager.get().intValue());
 
@@ -172,16 +200,16 @@ public class GameManagerTest {
     // make sure it re-uses that id
     assertEquals(1, gameManager.get().intValue());
     gameManager.getGames().put(1,
-            new Game(1, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
-                    formatProvider, falseProvider, formatProvider));
+        new Game(1, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
+            formatProvider, falseProvider, formatProvider, falseProvider, gameOptionsProvider));
     assertEquals(-1, gameManager.get().intValue());
 
     // remove game 1 out from under it, to make sure it'll fix itself
     gameManager.getGames().remove(1);
     assertEquals(1, gameManager.get().intValue());
     gameManager.getGames().put(1,
-            new Game(1, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
-                    formatProvider, falseProvider, formatProvider));
+        new Game(1, cuMock, gameManager, timer, null, null, null, metricsMock, falseProvider,
+            formatProvider, falseProvider, formatProvider, falseProvider, gameOptionsProvider));
     assertEquals(-1, gameManager.get().intValue());
 
     gameManager.destroyGame(2);
@@ -193,13 +221,13 @@ public class GameManagerTest {
   @Test
   public void testCreateGame() {
     cuMock.broadcastToList(anyObject(Collection.class), eq(MessageType.GAME_PLAYER_EVENT),
-            anyObject(HashMap.class));
+        anyObject(HashMap.class));
     expectLastCall().times(3);
     replay(cuMock);
 
     userMock.joinGame(anyObject(Game.class));
     expectLastCall().times(3);
-    assertNull(userMock.getNickname());
+    userMock.getNickname();
     expectLastCall().andReturn("test").times(3);
     replay(userMock);
 

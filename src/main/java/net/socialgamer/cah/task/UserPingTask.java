@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012, Andy Janata
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ *
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,11 +23,12 @@
 
 package net.socialgamer.cah.task;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 import net.socialgamer.cah.data.ConnectedUsers;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 
 /**
@@ -37,6 +38,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  */
 @Singleton
 public class UserPingTask extends SafeTimerTask {
+
   private final ConnectedUsers users;
   private final ScheduledThreadPoolExecutor globalTimer;
 

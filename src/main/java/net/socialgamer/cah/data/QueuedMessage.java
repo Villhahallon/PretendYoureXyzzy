@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012, Andy Janata
  * All rights reserved.
- * <p>
+ * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ * 
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,15 +23,14 @@
 
 package net.socialgamer.cah.data;
 
-import net.socialgamer.cah.Constants.ReturnableData;
-
-import javax.annotation.Nonnull;
 import java.util.Map;
+
+import net.socialgamer.cah.Constants.ReturnableData;
 
 
 /**
  * A message to be queued for delivery to a client.
- *
+ * 
  * @author Andy Janata (ajanata@socialgamer.net)
  */
 public class QueuedMessage implements Comparable<QueuedMessage> {
@@ -41,7 +40,7 @@ public class QueuedMessage implements Comparable<QueuedMessage> {
 
   /**
    * Create a new queued message.
-   *
+   * 
    * @param messageType
    *          Type of message to be queued. The type influences the priority in returning messages
    *          to the client.
@@ -72,7 +71,7 @@ public class QueuedMessage implements Comparable<QueuedMessage> {
    * ordering.
    */
   @Override
-  public int compareTo(@Nonnull final QueuedMessage qm) {
+  public int compareTo(final QueuedMessage qm) {
     return this.messageType.getWeight() - qm.messageType.getWeight();
   }
 

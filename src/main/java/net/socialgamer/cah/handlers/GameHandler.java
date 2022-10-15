@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012, Andy Janata
  * All rights reserved.
- * <p>
+ * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ * 
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,6 +23,10 @@
 
 package net.socialgamer.cah.handlers;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import net.socialgamer.cah.Constants.AjaxRequest;
 import net.socialgamer.cah.Constants.ErrorCode;
 import net.socialgamer.cah.Constants.ReturnableData;
@@ -32,18 +36,16 @@ import net.socialgamer.cah.data.Game;
 import net.socialgamer.cah.data.GameManager;
 import net.socialgamer.cah.data.User;
 
-import javax.servlet.http.HttpSession;
-import java.util.Map;
-
 
 /**
  * Handler superclass for handlers that require a game. This finds the game and makes sure it's
  * valid and specified.
- *
+ * 
  * @author Andy Janata (ajanata@socialgamer.net)
  */
 public abstract class GameHandler extends Handler {
-  protected final GameManager gameManager;
+
+  protected GameManager gameManager;
 
   public GameHandler(final GameManager gameManager) {
     this.gameManager = gameManager;
@@ -77,7 +79,7 @@ public abstract class GameHandler extends Handler {
 
   /**
    * Handle a client request. The {@code Game} is guaranteed to be valid.
-   *
+   * 
    * @param request
    *          The request data.
    * @param session
@@ -89,5 +91,5 @@ public abstract class GameHandler extends Handler {
    * @return Response data.
    */
   public abstract Map<ReturnableData, Object> handle(final RequestWrapper request,
-                                                     final HttpSession session, final User user, final Game game);
+      final HttpSession session, final User user, final Game game);
 }

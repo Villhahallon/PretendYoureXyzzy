@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012, Andy Janata
  * All rights reserved.
- * <p>
+ * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ * 
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,6 +23,22 @@
 
 package net.socialgamer.cah.servlets;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import net.socialgamer.cah.Constants.LongPollEvent;
 import net.socialgamer.cah.Constants.LongPollResponse;
 import net.socialgamer.cah.Constants.ReturnableData;
@@ -30,22 +46,12 @@ import net.socialgamer.cah.Constants.SessionAttribute;
 import net.socialgamer.cah.data.QueuedMessage;
 import net.socialgamer.cah.data.User;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
 
 /**
  * Servlet implementation class LongPollServlet.
- *
+ * 
  * This servlet is used for client long polling requests.
- *
+ * 
  * @author Andy Janata (ajanata@socialgamer.net)
  */
 @WebServlet("/LongPollServlet")
@@ -83,8 +89,8 @@ public class LongPollServlet extends CahServlet {
    */
   @Override
   protected void handleRequest(final HttpServletRequest request,
-                               final HttpServletResponse response, final HttpSession hSession) throws
-          IOException {
+      final HttpServletResponse response, final HttpSession hSession) throws ServletException,
+      IOException {
     final PrintWriter out = response.getWriter();
 
     final long start = System.nanoTime();
@@ -114,18 +120,18 @@ public class LongPollServlet extends CahServlet {
       // just in case...
       if (msgs.size() > 0) {
         final List<Map<ReturnableData, Object>> data =
-                new ArrayList<>(msgs.size());
+            new ArrayList<Map<ReturnableData, Object>>(msgs.size());
         for (final QueuedMessage qm : msgs) {
           data.add(qm.getData());
         }
-        returnArray(out, data);
+        returnArray(user, out, data);
         return;
       }
     }
     // otherwise, return that there is no new data
-    final Map<ReturnableData, Object> data = new HashMap<>();
+    final Map<ReturnableData, Object> data = new HashMap<ReturnableData, Object>();
     data.put(LongPollResponse.EVENT, LongPollEvent.NOOP.toString());
     data.put(LongPollResponse.TIMESTAMP, System.currentTimeMillis());
-    returnData(out, data);
+    returnData(user, out, data);
   }
 }

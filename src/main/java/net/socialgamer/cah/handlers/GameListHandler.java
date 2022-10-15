@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2012, Andy Janata
  * All rights reserved.
- * <p>
+ * 
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
- * <p>
+ * 
  * * Redistributions of source code must retain the above copyright notice, this list of conditions
- * and the following disclaimer.
+ *   and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice, this list of
- * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- * <p>
+ *   conditions and the following disclaimer in the documentation and/or other materials provided
+ *   with the distribution.
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
@@ -23,7 +23,14 @@
 
 package net.socialgamer.cah.handlers;
 
-import com.google.inject.Inject;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import net.socialgamer.cah.Constants.AjaxOperation;
 import net.socialgamer.cah.Constants.AjaxResponse;
 import net.socialgamer.cah.Constants.GameInfo;
@@ -33,13 +40,12 @@ import net.socialgamer.cah.data.Game;
 import net.socialgamer.cah.data.GameManager;
 import net.socialgamer.cah.data.GameManager.MaxGames;
 
-import javax.servlet.http.HttpSession;
-import java.util.*;
+import com.google.inject.Inject;
 
 
 /**
  * Handler to get a list of active games.
- *
+ * 
  * @author Andy Janata (ajanata@socialgamer.net)
  */
 public class GameListHandler extends Handler {
@@ -57,11 +63,11 @@ public class GameListHandler extends Handler {
 
   @Override
   public Map<ReturnableData, Object> handle(final RequestWrapper request,
-                                            final HttpSession session) {
-    final Map<ReturnableData, Object> ret = new HashMap<>();
+      final HttpSession session) {
+    final Map<ReturnableData, Object> ret = new HashMap<ReturnableData, Object>();
     final Collection<Game> games = gameManager.getGameList();
     final List<Map<GameInfo, Object>> gameInfos =
-            new ArrayList<>(games.size());
+        new ArrayList<Map<GameInfo, Object>>(games.size());
     for (final Game game : games) {
       final Map<GameInfo, Object> info = game.getInfo();
       if (null != info) {
