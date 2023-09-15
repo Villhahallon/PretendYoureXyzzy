@@ -469,7 +469,7 @@ boolean showAddCustomDeckJson = injector.getInstance(Key.get(new TypeLiteral<Boo
             <select class="custom_decks_list skip_changed" multiple="multiple">
             </select>
             <a href="Cubed_Chaos.deck.json" download="Cubed_Chaos.deck.json">Download Chaos Deck!</a>
-            <p>http://cubedchaos.ddns.net:8080/Cubed_Chaos.deck.json</p>
+            <p>https://cards.villsystems.com/Cubed_Chaos.deck.json</p>
         </fieldset>
         <% } %>
       </div>
